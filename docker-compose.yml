@@ -3,24 +3,30 @@ services:
     api:
         image: d2d-backend
         build: ./back-end
-        command: npm start
         ports:
             - "3000:3000"
         volumes: 
             - ./back-end:/usr/src/app
             - /usr/src/app/node_modules
         depends_on: 
-            - "mongo"
+            - mongo
     mongo:
         image: "mongo"
         ports: 
             - "27017:27017"
-    simulator:
-        image: d2d-simulator
-        build: ./simulator
-        command: yarn start api:3000
-        volumes:
-            - ./simulator:/usr/src/simulator
-            - /usr/src/simulator/node_modules
-        depends_on: 
-            - "api"
+    # simulator:
+    #     image: d2d-simulator
+    #     build: ./simulator
+    #     command: yarn start api:3000
+    #     volumes:
+    #         - ./simulator:/usr/src/simulator
+    #         - /usr/src/simulator/node_modules
+    #     depends_on: 
+    #         - api
+    #         - mongo
+    adminmongo:
+        image: "mrvautin/adminmongo"
+        ports:
+            - "1234:1234"
+        environment: 
+            - HOST=0.0.0.0
