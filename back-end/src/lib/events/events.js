@@ -6,6 +6,7 @@ const events = {
     VehicleInBoundries: "VehicleInBoundries",
     VehicleNotInBoundries: "VehicleNotInBoundries",
     VehicleDisregardLocationUpdate: "VehicleDisregardLocationUpdate",
+    AttemptingVehicleDeregisration: "AttemptingVehicleDeregisration",
     VehicleDeregisration: "VehicleDeregisration"
 }
 

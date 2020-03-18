@@ -4,9 +4,9 @@ const saveEvents = require('./reducer');
 
 const makeVehicleEvent = type => (data = {}) => {
     const { vehicleId } = data;
-    delete data.vehicleId;
+    delete data.vehicle;
     
-    return new VehicleEvent({ type, vehicleId, data });
+    return new VehicleEvent({ type, vehicleId, payload: data });
 }
 const AttemtingVehicleRegistration = makeVehicleEvent(events.AttemtingVehicleRegistration);
 const VehicleRegistration = makeVehicleEvent(events.VehicleRegistration);

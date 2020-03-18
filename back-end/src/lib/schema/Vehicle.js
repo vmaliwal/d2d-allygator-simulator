@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Vehicle = new Schema({
-    vehicleId: String,
+    vehicleId: { type: String, index: true },
     timestamp: {type: Date, default: Date.now},
-    isRegistered: {type: Boolean, default: false},
+    isRegistered: {type: Boolean, default: true},
     withInBounds: {type: Boolean, default: true},
     markerColor: String
 });

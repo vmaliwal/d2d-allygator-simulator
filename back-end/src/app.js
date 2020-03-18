@@ -29,7 +29,7 @@ app.post('/vehicles', async (req, res) => {
 
     const vehicle = new Vehicle({ vehicleId })
 
-    const payload = {vehicle , data};
+    const payload = {vehicleId, vehicle, data};
     await EventService.emitEvent(payload, eventNames.VehicleRegistration);
 
     res.sendStatus(204);
@@ -42,7 +42,7 @@ app.post('/vehicles/:id/locations', async (req, res) => {
     const {lat, lng} = data;
 
     const vehicle = new Vehicle({ vehicleId, lat, lng, isRegistered: true })
-    const payload = { vehicle, data };
+    const payload = { vehicleId, vehicle, data };
     
     await EventService.emitEvent(payload, eventNames.VehicleLocationUpdate);
 
@@ -50,12 +50,16 @@ app.post('/vehicles/:id/locations', async (req, res) => {
 });
 
 app.delete('/vehicles/:id', async (req, res) => {
+    console.log("CALLING TO DELETE VEHICLE ID");
+
     const vehicleId = req.params.id;
     const data = req.body;
-    const vehicleDeregistration = E.VehicleDeregisration({ vehicleId: vehicleId, data: data });
-    await E.saveEvents([vehicleDeregistration]);
-    
-    io.emit('vehicleDeregistered', vehicleId);
+
+    const vehicle = new Vehicle({ vehicleId, isRegistered: false })
+
+    const payload = {vehicleId, vehicle, data};
+
+    await EventService.emitEvent(payload, eventNames.VehicleDeregisration);
 
     res.sendStatus(204);
 })
