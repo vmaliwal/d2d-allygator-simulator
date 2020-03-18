@@ -10,8 +10,9 @@ services:
             - /usr/src/app/node_modules
         depends_on: 
             - mongo
+            - redis
     mongo:
-        image: "mongo"
+        image: mongo
         ports: 
             - "27017:27017"
     # simulator:
@@ -30,3 +31,9 @@ services:
             - "1234:1234"
         environment: 
             - HOST=0.0.0.0
+    redis:
+        image: redis
+        command: ["redis-server", "--appendonly", "yes"]
+        hostname: redis
+        ports:
+            - "6379:6379"

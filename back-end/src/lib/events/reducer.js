@@ -1,9 +1,9 @@
 // const eventNames = require('./events');
-const Vehicle = require('../vehicle');
+const Vehicle = require('../model/vehicle');
 
 const reduce = async vehicleEvent => {
             
-    const vehicle = new Vehicle({ vehicleId: vehicleEvent.vehicleId, isRegistered: true });
+     const vehicle = new Vehicle({ vehicleId: vehicleEvent.vehicleId, isRegistered: true });
     await vehicleEvent.save();
 
     return vehicle;
