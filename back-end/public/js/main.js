@@ -33,12 +33,12 @@
     const markers = {};
     
     // creates a marker
-    function createMarker(lat=52.53, lng=13.403, markerColor) {
+    function createMarker(lat=52.53, lng=13.403, markerColor, vehicleId) {
         return L.marker([lat, lng], {
             icon: L.mapbox.marker.icon({
                 'marker-color': markerColor
             })
-        })
+        }).bindTooltip(vehicleId);
     };
     
     function setLatLongMarker(marker, lat, lng) {
@@ -47,7 +47,7 @@
     
     // store vehicle in an object or array
     function registerVehicle({vehicleId, lat=52.53, lng=13.403, markerColor }) {
-        const marker = createMarker(lat, lng, markerColor);
+        const marker = createMarker(lat, lng, markerColor, vehicleId);
         markers[vehicleId] = marker;
         marker.addTo(map);
         return marker;

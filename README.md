@@ -53,6 +53,7 @@ $ d2d-allygator-simulator/back-end> npm test
 
 ## TODOS
 - Write tests for front-end.
+- Clustering on markers on the map.
 - Improve additonal coverage for back-end.
 - Handling errors and edge-cases.
 - Load test the app by running multiple instances behind a load balancer.
