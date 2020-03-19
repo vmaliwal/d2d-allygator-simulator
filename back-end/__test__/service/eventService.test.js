@@ -1,7 +1,7 @@
 const dbHandler = require('../dbHandler');
 const EventService = require('../../src/lib/service/eventService');
 const { events: eventNames } = require('../../src/lib/events/index');
-const VehicleModel = require('../../src/lib/model/vehicle');
+
 const VehicleSchema = require('../../src/lib/schema/Vehicle');
 
 const http = require('http');
@@ -53,8 +53,6 @@ describe('Event Service', () => {
     test('emits vehicle registration event', async (done) => {
         const postData = { id: "1234" };
         const vehicleId = postData['id'];
-        const vehicle = new VehicleModel({ vehicleId });
-
         const payload = { vehicleId, postData };
         const event = eventNames.VehicleRegistration;
 
@@ -87,7 +85,7 @@ describe('Event Service', () => {
 
         test('emits vehicle location update event within boundry', async (done) => {
             const postData = { "lat": 52.53297, "lng": 13.42691, "at": "2017-09-01T12:00:00Z" };
-            const vehicle = new VehicleModel({ vehicleId, lat: postData['lat'], lng: postData['lng'], isRegistered: true });
+  
             const payload = {vehicleId, data: postData};
             const event = eventNames.VehicleLocationUpdate;
     
@@ -112,7 +110,7 @@ describe('Event Service', () => {
         test('vehicle location update outside boundry', async (done) => {
             const postData = { "lat": 13.53, "lng": 45.1, "at": "2017-09-01T12:00:00Z" };
             const vehicleId = "1234";
-            const vehicle = new VehicleModel({ vehicleId, lat: postData['lat'], lng: postData['lng'], isRegistered: true });
+
             const payload = {vehicleId, data: postData};
             const event = eventNames.VehicleLocationUpdate;
     
@@ -129,7 +127,7 @@ describe('Event Service', () => {
         });
 
         test('emits vehicle deregistration event', async (done) => {
-            const vehicle = new VehicleModel({ vehicleId, isRegistered: false });
+            
             const payload = { vehicleId};
             const event = eventNames.VehicleDeregisration;
 
