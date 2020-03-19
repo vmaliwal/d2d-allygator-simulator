@@ -1,5 +1,7 @@
 (() => {
-    const socket = io();
+    const socket = io({
+        transports: ['websocket']
+      });
     const MAPBOX_TOKEN = `pk.eyJ1Ijoia29vbmNoaSIsImEiOiJjazd2dDVoeHgxZmNzM2htcjFvc2FsNG45In0.wNsPOe_EaTfaYjVCl0w6Kw`;
     
     socket.on('connect', () => {

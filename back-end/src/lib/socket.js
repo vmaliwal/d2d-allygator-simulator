@@ -1,3 +1,6 @@
+/**
+ * Singleton for Socket.io
+ */
 const Socket = {
     io: null,
     init: function(server) {

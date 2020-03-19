@@ -20,12 +20,8 @@ app.get('/', (_, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-//TODOS:
-// Error handling in paths -- return 404 error
-// Try catch for event service emit event
-
 /**
- * 
+ * Register a vehicle and return 204 response
  */
 app.post('/vehicles', async (req, res) => {
     const data = req.body;
@@ -33,22 +29,37 @@ app.post('/vehicles', async (req, res) => {
 
     const payload = {vehicleId, data};
 
-    await EventService.emitEvent(payload, eventNames.VehicleRegistration);
+    try {
+        await EventService.emitEvent(payload, eventNames.VehicleRegistration);
+    } catch(e) {
+        console.log(e.message);
+    }
+
 
     res.sendStatus(204);
 });
 
+/**
+ * Update vehicle GPS location and return 204 response
+ */
 app.post('/vehicles/:id/locations', async (req, res) => {
     const vehicleId = req.params.id;
     const data = req.body;
     
     const payload = { vehicleId, data };
     
-    await EventService.emitEvent(payload, eventNames.VehicleLocationUpdate);
+    try {
+        await EventService.emitEvent(payload, eventNames.VehicleLocationUpdate);
+    } catch(e) {
+        console.log(e.message);
+    }
 
     res.sendStatus(204);
 });
 
+/**
+ * Unregister vehicle and return 204 response
+ */
 app.delete('/vehicles/:id', async (req, res) => {
     console.log("CALLING TO DELETE VEHICLE ID");
 
@@ -57,7 +68,11 @@ app.delete('/vehicles/:id', async (req, res) => {
 
     const payload = {vehicleId, data};
 
-    await EventService.emitEvent(payload, eventNames.VehicleDeregisration);
+    try {
+        await EventService.emitEvent(payload, eventNames.VehicleDeregisration);
+    } catch(e) {
+        console.log(e.message);
+    }
 
     res.sendStatus(204);
 })

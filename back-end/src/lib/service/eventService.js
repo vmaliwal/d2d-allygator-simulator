@@ -4,6 +4,12 @@ const VehicleService = require('./vehicleService');
 const Point = require('../model/point');
 const VehicleSchema = require('../schema/Vehicle');
 
+/**
+ * Saves the event in database and emits the event
+ * using redis and socket io to the consumer
+ * @param {object} payload 
+ * @param {E} event 
+ */
 async function emitEvent (payload, event) {
     const { vehicleId } = payload;
 
@@ -26,7 +32,11 @@ async function emitEvent (payload, event) {
             throw new Error("Unknown event emitted");
     }
 
-
+    /**
+     * Register vehicle events in DB
+     * Emit register event using socket io for consumer
+     * @param {object} payload 
+     */
     async function registerVehicle(payload) {
         const markerColor = VehicleService.getRandomColor();
 
@@ -49,6 +59,11 @@ async function emitEvent (payload, event) {
         return savedEvents;
     }
 
+    /**
+     * Update vehicle's locations in DB
+     * Emit update location event if it is within set boundries for consumer
+     * @param {object} payload 
+     */
     async function updateVehicle(payload) {
 
         const savedVehicle = await VehicleService.findById(vehicleId);
@@ -96,6 +111,11 @@ async function emitEvent (payload, event) {
 
     }
 
+    /**
+     * Deregister a vehicle in the DB
+     * Emit deregistration event to consumer
+     * @param {object} payload 
+     */
     async function deRegisterVehicle(payload) {
         const savedVehicle = await VehicleService.findById(vehicleId);
 

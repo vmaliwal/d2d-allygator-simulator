@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/**
+ * Schema for VehicleEvent collection
+ */
 const VehicleEvent = new Schema({
     vehicleId: { type: String, index: true },
     type: String,

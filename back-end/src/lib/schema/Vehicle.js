@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+/**
+ * Schema for Vehicle Collection
+ */
 const Vehicle = new Schema({
     vehicleId: { type: String, index: true },
     timestamp: {type: Date, default: Date.now},

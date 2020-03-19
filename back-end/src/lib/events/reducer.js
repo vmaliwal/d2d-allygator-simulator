@@ -1,3 +1,6 @@
+/**
+ * Save event to event collection
+ */
 module.exports = async vehicleEvents => {
     let vehicle;
     const events = [];

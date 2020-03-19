@@ -29,7 +29,7 @@ const distanceBetweenTwoPoints = point1 => point2 => {
 }
 
 /**
- * 
+ * convert to radians
  * @param {number} val 
  */
 function toRadians(val) {
@@ -40,13 +40,14 @@ const D2D_OFFICE_LAT = 52.53;
 const D2D_OFFICE_LNG = 13.403;
 
 /**
- * 
+ * Input D2D office location lat long
  */
 const distanceFromD2DOffice = distanceBetweenTwoPoints(new Point(D2D_OFFICE_LAT, D2D_OFFICE_LNG));
 
 /**
  * 
- * @param {number} kms 
+ * @param {number} kms
+ * @param {Point} point2
  */
 const isDistanceGreaterThan = kms => point2 => {
     const distance = distanceFromD2DOffice(point2);
@@ -54,7 +55,7 @@ const isDistanceGreaterThan = kms => point2 => {
 }
 
 /**
- * 
+ * Set distance to 3.5 kms
  */
 const isPointWithIn3point5FromOffice = isDistanceGreaterThan(3.5);
 
