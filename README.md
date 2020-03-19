@@ -57,3 +57,4 @@ $ d2d-allygator-simulator/back-end> npm test
 - Improve additonal coverage for back-end.
 - Handling errors and edge-cases.
 - Load test the app by running multiple instances behind a load balancer.
+- Use env variables where necessary, for example port binding, etc.
