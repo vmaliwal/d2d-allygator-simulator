@@ -11,7 +11,7 @@ An Allygator Shuttle Simulation powered by Door2Door's driver simulator data.
 - [MapBox](https://www.mapbox.com/)
 - [Docker](https://www.docker.com/)
 
-
+### Why?
 - MongoDb acts as an EventStore and stores all simulation events emitted by the driver simulator app, along with vehicle's data.
 - Websockets are used to deliver location data to the front-end map using Redis & Socket.io.
 - Mapbox is utilized for convenience of visualizing location data on the map.
