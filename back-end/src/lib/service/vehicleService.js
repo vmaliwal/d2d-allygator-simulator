@@ -11,7 +11,7 @@ async function save(vehicle) {
 
 async function upsert(vehicle) {
     const { vehicleId } = vehicle;
-    const obj =  await Vehicle.findOne({ vehicleId });
+    const obj =  await findById(vehicleId);
 
     if (obj === null || obj === undefined)
         return await save(vehicle);
@@ -21,10 +21,6 @@ async function upsert(vehicle) {
 
     return await save(obj);
 
-}
-
-async function updateLocationBoundries(vehicleId) {
-    return await upsert(vehicleId, { withInBounds: val });
 }
 
 function isVehicleWithInBoundries(point) {
@@ -39,7 +35,6 @@ module.exports = {
     findById,
     save,
     upsert,
-    updateLocationBoundries,
     isVehicleWithInBoundries,
     getRandomColor
 }
