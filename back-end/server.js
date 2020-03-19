@@ -1,7 +1,6 @@
 const { server } = require('./src/app');
 const mongoose = require('mongoose');
 
-
 const start = async () => {
     const mongooseOpts = {
         useCreateIndex: true,
@@ -13,4 +12,4 @@ const start = async () => {
     console.log("mongo connection success");
     server.listen(3000);
 }
-start();
+module.exports.init = start();
