@@ -11,93 +11,9 @@
     </style>
   </head>
   <body>
-    <h1>WELCOME TO THE D@D</h1>
+    <h1>WELCOME TO THE D2D</h1>
     <div id='map'></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> 
-    <script>  
-        const socket = io();
-        const MAPBOX_TOKEN = `pk.eyJ1Ijoia29vbmNoaSIsImEiOiJjazd2dDVoeHgxZmNzM2htcjFvc2FsNG45In0.wNsPOe_EaTfaYjVCl0w6Kw`;
-
-        socket.on('connect', () => {
-            console.log("connection established::");
-            
-            socket.on('hello', function(msg) {
-              //Do something with message here. 
-              console.log("receved mssg::", msg);
-            });
-
-            socket.on('VehicleRegistration', (data) => {
-                console.log("registered :", data);
-                registerVehicle(data);
-            })
-
-            socket.on('VehicleLocationUpdate', (data) => {
-                console.log("locationUpdate :", data);
-                updateVehicleLocation(data);
-            });
-
-            socket.on('VehicleDeregisration', (data) => {
-                console.log("un-registered :", data);
-                removeVehicle(data);
-            })
-        });
-
-        L.mapbox.accessToken = 'pk.eyJ1Ijoia29vbmNoaSIsImEiOiJjazd2dDVoeHgxZmNzM2htcjFvc2FsNG45In0.wNsPOe_EaTfaYjVCl0w6Kw';
-        
-        const map = L.mapbox.map('map')
-        .setView([52.53, 13.403], 9)
-        .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
-
-        const markers = {};
-
-        // creates a marker
-        function createMarker(lat=52.53, lng=13.403, markerColor) {
-            return L.marker([lat, lng], {
-                icon: L.mapbox.marker.icon({
-                    'marker-color': markerColor
-                })
-            })
-        };
-
-        function setLatLongMarker(marker, lat, lng) {
-            marker.setLatLng(L.latLng(lat, lng));
-        }
-
-        // store vehicle in an object or array
-        function registerVehicle({vehicleId, lat=52.53, lng=13.403, markerColor }) {
-            const marker = createMarker(lat, lng, markerColor);
-            markers[vehicleId] = marker;
-            marker.addTo(map);
-            return marker;
-            // create marker,
-            // save marker in object
-            // add to map
-        }
-
-        function updateVehicleLocation({vehicleId, lat, lng, markerColor}) {
-            let marker;
-            if (vehicleId in markers) {
-                marker = markers[vehicleId];
-            } else {
-                marker = registerVehicle({vehicleId,lat, lng, markerColor});
-                markers[vehicleId] = marker;
-            }
-            setLatLongMarker(marker, lat, lng);
-            // get marker
-            // if it does not exist create marker
-            // set lat long for marker
-        }
-
-        function removeVehicle(vehicleId) {
-            if (vehicleId in markers)
-            // also remove marker from the map
-                delete markers[vehicleId];
-        }
-
-        function getRandomColor() {
-           return "#"+((1<<24)*Math.random()|0).toString(16)
-        }
-
-    </script>
+    <script src="./js/main.js"></script>
   </body>
 </html>

@@ -1,14 +1,13 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const E = require('./lib/events');
 const {events: eventNames } = require('./lib/events');
 const path = require('path');
 const Vehicle = require('./lib/model/vehicle');
 const EventService = require('./lib/service/eventService');
 
 const server = require('http').Server(app);
-const io = require('./lib/utils/socket').init(server);
+const io = require('./lib/socket').init(server);
 const redisAdapter = require('socket.io-redis');
 
 io.adapter(redisAdapter({host: 'redis', port: 6379}));
@@ -16,9 +15,15 @@ io.adapter(redisAdapter({host: 'redis', port: 6379}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, '../public')));
+
 app.get('/', (_, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
+
+//TODOS:
+// Error handling in paths -- return 404 error
+// Try catch for event service emit event
 
 /**
  * 

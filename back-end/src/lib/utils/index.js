@@ -1,5 +1,4 @@
 const Point = require('../model/point');
-
 /**
  *  Refer : http://www.movable-type.co.uk/scripts/latlong.html
  * @param {Point} point1
@@ -59,4 +58,6 @@ const isDistanceGreaterThan = kms => point2 => {
  */
 const isPointWithIn3point5FromOffice = isDistanceGreaterThan(3.5);
 
-module.exports = { isPointWithIn3point5FromOffice }
+module.exports = { 
+    isPointWithIn3point5FromOffice
+}

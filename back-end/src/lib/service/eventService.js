@@ -7,22 +7,19 @@ const VehicleSchema = require('../schema/Vehicle');
 async function emitEvent (payload, event) {
     const { vehicleId } = payload;
 
-    const io = require('../utils/socket').getIo();
+    const io = require('../socket').getIo();
 
     switch(event) {
         case eventNames.VehicleRegistration: {
-            registerVehicle(payload);
-            break;
+            return registerVehicle(payload);
         }
         
         case eventNames.VehicleLocationUpdate: {
-            updateVehicle(payload);
-            break;
+            return updateVehicle(payload);
         }
         
         case eventNames.VehicleDeregisration: {
-            deRegisterVehicle(payload);
-            break;
+            return deRegisterVehicle(payload);
         }
         
         default:
@@ -40,7 +37,7 @@ async function emitEvent (payload, event) {
 
         const registrationEvent = E.VehicleRegistration(payload);
 
-        await E.saveEvents([attemptRegistrationEvent, registrationEvent]);
+        const savedEvents = await E.saveEvents([attemptRegistrationEvent, registrationEvent]);
 
         const vehiclePayload = {
             vehicleId: savedVehicle.vehicleId,
@@ -49,6 +46,7 @@ async function emitEvent (payload, event) {
         
         io.emit(event, vehiclePayload);
 
+        return savedEvents;
     }
 
     async function updateVehicle(payload) {
@@ -75,8 +73,7 @@ async function emitEvent (payload, event) {
             const vehicleDisregardLocationUpdateEvent = E.VehicleDisregardLocationUpdate(payload);
             events.push(vehicleDisregardLocationUpdateEvent);
 
-            await E.saveEvents(events);
-            return;
+            return await E.saveEvents(events);
         }
 
         const vehicleInBoundriesEvent = E.VehicleInBoundries(payload);
@@ -84,7 +81,7 @@ async function emitEvent (payload, event) {
 
         const vehicleLocationUpdateEvent = E.VehicleLocationUpdate(payload);
         events.push(vehicleLocationUpdateEvent);
-        await E.saveEvents(events);
+        const savedEvents = await E.saveEvents(events);
 
         const vehiclePayload = {
             vehicleId: savedVehicle.vehicleId,
@@ -95,12 +92,14 @@ async function emitEvent (payload, event) {
 
         io.emit(event, vehiclePayload);
 
+        return savedEvents;
+
     }
 
     async function deRegisterVehicle(payload) {
         const savedVehicle = await VehicleService.findById(vehicleId);
 
-        const attemptingVehicleDeregisrationEvent = E.AttemptingVehicleDeregisration(payload);
+        const attemptingVehicleDeregisrationEvent = E.AttemtingVehicleDeregistration(payload);
 
         const vehicleSchema = new VehicleSchema({ vehicleId, isRegistered: false });
 
@@ -108,7 +107,7 @@ async function emitEvent (payload, event) {
 
         const vehicleDeregisrationEvent = E.VehicleDeregisration(payload);
 
-        await E.saveEvents([attemptingVehicleDeregisrationEvent, vehicleDeregisrationEvent]);
+        const savedEvents = await E.saveEvents([attemptingVehicleDeregisrationEvent, vehicleDeregisrationEvent]);
 
         const vehiclePayload = {
             vehicleId: savedVehicle.vehicleId,
@@ -116,6 +115,8 @@ async function emitEvent (payload, event) {
         }
 
         io.emit(event, vehiclePayload);
+
+        return savedEvents;
     }
 
 }

@@ -1,21 +1,11 @@
-// const eventNames = require('./events');
-const Vehicle = require('../model/vehicle');
-
-const reduce = async vehicleEvent => {
-            
-    const vehicle = new Vehicle({ vehicleId: vehicleEvent.vehicleId, isRegistered: true });
-    
-    await vehicleEvent.save();
-
-    return vehicle;
-}
-
-module.exports = async events => {
+module.exports = async vehicleEvents => {
     let vehicle;
+    const events = [];
 
-    for (let event of events) {
-        vehicle = await reduce(event);
+    for (let event of vehicleEvents) {
+        vehicle = await event.save();
+        events.push(vehicle);
     }
 
-    return vehicle;
+    return events;
 }
