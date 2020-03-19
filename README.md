@@ -46,8 +46,14 @@ $ driver-simulator> yarn start localhost:3000
 ```
 
 ## To run tests
+
 ```
 $ d2d-allygator-simulator>cd back-end
+```
+You may need to run `npm install` manually before running tests as by default dev dependencies will not be installed
+
+```
+$ d2d-allygator-simulator/back-end> npm install
 $ d2d-allygator-simulator/back-end> npm test
 ```
 
